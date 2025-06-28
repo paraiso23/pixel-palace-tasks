@@ -21,10 +21,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ scheduledTask, task, selectedUser }
 
   const handleComplete = () => {
     if (selectedUser && scheduledTask.status !== 'completed') {
+      // Complete the task first
       completeTask(scheduledTask.id, selectedUser);
-      // Mostrar efecto spark
+      
+      // Then show the spark effect without blocking the update
       setShowSpark(true);
-      setTimeout(() => setShowSpark(false), 600);
+      setTimeout(() => setShowSpark(false), 400);
     }
   };
 
@@ -33,7 +35,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ scheduledTask, task, selectedUser }
       case 'completed':
         return 'border-neon-green bg-neon-green text-retro-black';
       case 'in-progress':
-        return 'border-neon-yellow bg-retro-gray text-neon-yellow animate-pixel-blink';
+        return 'border-neon-yellow bg-retro-gray text-neon-yellow';
       default:
         return 'border-retro-lightgray text-retro-lightgray hover:border-neon-cyan';
     }
@@ -56,8 +58,8 @@ const TaskCard: React.FC<TaskCardProps> = ({ scheduledTask, task, selectedUser }
     <div className={`relative p-3 border-2 transition-all duration-200 ${getStatusColor()}`}>
       {/* Efecto spark al completar */}
       {showSpark && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="text-neon-green text-2xl animate-spark">✨</div>
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+          <div className="text-neon-green text-2xl animate-bounce">✨</div>
         </div>
       )}
 
