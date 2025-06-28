@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { useGame } from '../context/GameContext';
 import TaskCard from './TaskCard';
+import TaskManager from './TaskManager';
 
 interface TaskCalendarProps {
   selectedUser?: 'eli' | 'orlando';
@@ -74,9 +74,12 @@ const TaskCalendar: React.FC<TaskCalendarProps> = ({ selectedUser }) => {
               <div className="grid md:grid-cols-2 gap-4">
                 {/* Mañana */}
                 <div>
-                  <h4 className="font-mono text-xs text-retro-lightgray mb-2">
-                    🌅 MAÑANA
-                  </h4>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-mono text-xs text-retro-lightgray">
+                      🌅 MAÑANA
+                    </h4>
+                    <TaskManager date={dateString} timeSlot="morning" />
+                  </div>
                   <div className="space-y-2">
                     {dayTasks.morning.map((scheduledTask) => (
                       <TaskCard
@@ -96,9 +99,12 @@ const TaskCalendar: React.FC<TaskCalendarProps> = ({ selectedUser }) => {
 
                 {/* Tarde */}
                 <div>
-                  <h4 className="font-mono text-xs text-retro-lightgray mb-2">
-                    🌆 TARDE
-                  </h4>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-mono text-xs text-retro-lightgray">
+                      🌆 TARDE
+                    </h4>
+                    <TaskManager date={dateString} timeSlot="afternoon" />
+                  </div>
                   <div className="space-y-2">
                     {dayTasks.afternoon.map((scheduledTask) => (
                       <TaskCard

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { GameState, ScheduledTask, User } from '../types/game';
 
@@ -61,6 +60,8 @@ const INITIAL_STATE: GameState = {
 type GameAction = 
   | { type: 'COMPLETE_TASK'; payload: { taskId: string; userId: 'eli' | 'orlando' } }
   | { type: 'START_TASK'; payload: { taskId: string; userId: 'eli' | 'orlando' } }
+  | { type: 'ADD_TASK'; payload: { taskId: string; date: string; timeSlot: 'morning' | 'afternoon' } }
+  | { type: 'REMOVE_TASK'; payload: { scheduledTaskId: string } }
   | { type: 'RESET_WEEK' }
   | { type: 'ENABLE_CATCH_UP' }
   | { type: 'LOAD_STATE'; payload: GameState };
@@ -112,6 +113,30 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       };
     }
 
+    case 'ADD_TASK': {
+      const { taskId, date, timeSlot } = action.payload;
+      const newScheduledTask: ScheduledTask = {
+        id: `${taskId}-${date}-${timeSlot}-${Date.now()}`,
+        taskId,
+        date,
+        timeSlot,
+        status: 'pending'
+      };
+
+      return {
+        ...state,
+        scheduledTasks: [...state.scheduledTasks, newScheduledTask]
+      };
+    }
+
+    case 'REMOVE_TASK': {
+      const { scheduledTaskId } = action.payload;
+      return {
+        ...state,
+        scheduledTasks: state.scheduledTasks.filter(st => st.id !== scheduledTaskId)
+      };
+    }
+
     case 'ENABLE_CATCH_UP': {
       // Lógica para el sábado por la mañana - modo catch-up
       const userTokens = Object.values(state.users).map(u => u.weeklyTokens);
@@ -150,6 +175,8 @@ interface GameContextType {
   state: GameState;
   completeTask: (taskId: string, userId: 'eli' | 'orlando') => void;
   startTask: (taskId: string, userId: 'eli' | 'orlando') => void;
+  addTask: (taskId: string, date: string, timeSlot: 'morning' | 'afternoon') => void;
+  removeTask: (scheduledTaskId: string) => void;
   enableCatchUp: () => void;
   resetWeek: () => void;
 }
@@ -185,6 +212,14 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     dispatch({ type: 'START_TASK', payload: { taskId, userId } });
   };
 
+  const addTask = (taskId: string, date: string, timeSlot: 'morning' | 'afternoon') => {
+    dispatch({ type: 'ADD_TASK', payload: { taskId, date, timeSlot } });
+  };
+
+  const removeTask = (scheduledTaskId: string) => {
+    dispatch({ type: 'REMOVE_TASK', payload: { scheduledTaskId } });
+  };
+
   const enableCatchUp = () => {
     dispatch({ type: 'ENABLE_CATCH_UP' });
   };
@@ -198,6 +233,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       state,
       completeTask,
       startTask,
+      addTask,
+      removeTask,
       enableCatchUp,
       resetWeek,
     }}>
