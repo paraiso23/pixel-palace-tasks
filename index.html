@@ -1,23 +1,49 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pixel-palace-tasks</title>
-    <meta name="description" content="Lovable Generated Project" />
+    <title>TaskGame 16-bit - Gamificación de Tareas</title>
+    <meta name="description" content="App de gamificación de tareas domésticas estilo 16-bit" />
     <meta name="author" content="Lovable" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Google Fonts - Press Start 2P for 16-bit feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    <meta property="og:title" content="pixel-palace-tasks" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:title" content="TaskGame 16-bit" />
+    <meta property="og:description" content="App de gamificación de tareas domésticas estilo 16-bit" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <style>
+      /* Prevent blue highlight on mobile */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      /* Custom pixel perfect borders */
+      .pixel-border {
+        border-style: solid;
+        border-image: none;
+      }
+      
+      /* 16-bit button effect */
+      .btn-16bit {
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+      }
+    </style>
   </head>
 
-  <body>
+  <body class="bg-black">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

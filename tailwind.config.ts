@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,7 +19,24 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'pixel': ['Press Start 2P', 'monospace'],
+				'mono': ['Space Mono', 'monospace'],
+			},
 			colors: {
+				// 16-bit color palette
+				'neon': {
+					green: '#00FF00',
+					cyan: '#00FFFF',
+					pink: '#FF00FF',
+					yellow: '#FFFF00',
+				},
+				'retro': {
+					black: '#000000',
+					darkgray: '#1a1a1a',
+					gray: '#333333',
+					lightgray: '#666666',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -52,16 +70,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -69,26 +77,28 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			keyframes: {
-				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+				'pixel-blink': {
+					'0%, 50%': { opacity: '1' },
+					'51%, 100%': { opacity: '0.3' }
 				},
-				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+				'pixel-bounce': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-4px)' }
+				},
+				'spark': {
+					'0%': { transform: 'scale(0) rotate(0deg)', opacity: '1' },
+					'100%': { transform: 'scale(1.5) rotate(180deg)', opacity: '0' }
+				},
+				'glow': {
+					'0%, 100%': { boxShadow: '0 0 5px #00FF00' },
+					'50%': { boxShadow: '0 0 20px #00FF00, 0 0 30px #00FF00' }
 				}
 			},
 			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'pixel-blink': 'pixel-blink 2s infinite',
+				'pixel-bounce': 'pixel-bounce 1s infinite',
+				'spark': 'spark 0.6s ease-out',
+				'glow': 'glow 2s ease-in-out infinite alternate'
 			}
 		}
 	},
